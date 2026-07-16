@@ -1,6 +1,7 @@
 {
   "lab_metadata": {
     "name": "Essentials",
+    "type": "machine",
     "avatar_path": "/assets/vectors/sysbox.svg",
     "banner_path": "/assets/banners/sysbox_header.png",
     "environment": "alpha"
