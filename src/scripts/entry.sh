@@ -1,8 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 
-# Clear terminal screen
-clear
+# Welcome MOTD
 
 # Print welcome MOTD
 if [ -f "/opt/apex/src/config/apex-terminal.txt" ]; then
