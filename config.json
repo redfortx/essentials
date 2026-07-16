@@ -1,0 +1,18 @@
+{
+  "lab_metadata": {
+    "name": "Essentials",
+    "avatar_path": "/assets/vectors/sysbox.svg",
+    "banner_path": "/assets/banners/sysbox_header.png",
+    "environment": "alpha"
+  },
+  "container_config": {
+    "entry_script": "src/scripts/entry.sh",
+    "port": [
+      8080
+    ]
+  },
+  "resources": {
+    "memory": 256,
+    "cores": 1
+  }
+}
