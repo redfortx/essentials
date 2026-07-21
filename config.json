@@ -15,5 +15,6 @@
   "resources": {
     "memory": 256,
     "cores": 1
-  }
+  },
+  "expiry": "45M"
 }
