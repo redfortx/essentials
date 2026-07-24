@@ -9,7 +9,7 @@
   "container_config": {
     "entry_script": "src/scripts/entry.sh",
     "port": [
-      8080
+      8181
     ]
   },
   "resources": {
