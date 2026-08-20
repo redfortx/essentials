@@ -2,19 +2,24 @@
   "lab_metadata": {
     "name": "Essentials",
     "type": "machine",
+    "mode": "none",
     "avatar_path": "/assets/image/avatar.png",
     "banner_path": "/assets/image/banner.png",
-    "environment": "alpha"
-  },
-  "container_config": {
-    "entry_script": "src/scripts/entry.sh",
-    "port": [
+    "environment": "alpha",
+    "allowed_plans": [
+      "free",
+      "pro",
+      "admin"
+    ],
+    "ports": [
       8181
-    ]
-  },
-  "resources": {
-    "memory": 256,
-    "cores": 1
+    ],
+    "custom_entry": true,
+    "entry_script": "src/scripts/entry.sh",
+    "resources": {
+      "cores": 1,
+      "memory": 256
+    }
   },
   "expiry": "45M"
 }
