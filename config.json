@@ -15,6 +15,7 @@
   ],
   "custom_entry": true,
   "entry_script": "src/scripts/entry.sh",
+  "runtime": "sysbox-runc",
   "resources": {
     "cores": 1,
     "memory": 256
