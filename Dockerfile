@@ -9,10 +9,20 @@ ENV DEBIAN_FRONTEND=noninteractive
 # binwalk, steghide, foremost) pull in large toolchains each and slowed
 # the build enough to get killed; add them back individually later if a
 # specific lab actually needs one.
+# systemd/systemd-sysv: this image runs under sysbox-runc (see
+# essentials/config.json's "runtime"), which is specifically built to run
+# an unmodified systemd as PID 1 safely inside an unprivileged container —
+# no --privileged, no manual cgroup/mount workarounds needed.
 RUN apt-get update && apt-get install -y --no-install-recommends \
     curl wget git python3 python3-pip nmap netcat-openbsd socat jq \
     nano vim openssh-client dnsutils whois tcpdump unzip \
-    && rm -rf /var/lib/apt/lists/*
+    systemd systemd-sysv \
+    && rm -rf /var/lib/apt/lists/* \
+    # Masked: these mount/create real kernel interfaces (debug/config/trace
+    # fs, static device nodes) that don't exist in any container, sysbox or
+    # not — always fail and leave systemd reporting "degraded" otherwise.
+    && systemctl mask sys-kernel-config.mount sys-kernel-debug.mount \
+        sys-kernel-tracing.mount kmod-static-nodes.service
 
 # Debian 12 blocks bare `pip install` (PEP 668) — meant to sit alongside
 # the system Python in a purpose-built lab image, so --break-system-packages
@@ -39,5 +49,11 @@ COPY src/ /opt/apex/src/
 # Grant execute rights on bootstrap scripts
 RUN chmod +x /opt/apex/src/scripts/entry.sh
 
-# Run entry bootstrap script
+# systemd's expected shutdown signal — without this, `docker stop` sends
+# SIGTERM (which systemd-as-PID1 doesn't treat as a clean shutdown request)
+# and the container hangs until the kill timeout.
+STOPSIGNAL SIGRTMIN+3
+
+# Run entry bootstrap script — sets up the MOTD/user, then hands off to
+# systemd (see entry.sh's final exec) instead of just idling.
 ENTRYPOINT ["/bin/bash", "/opt/apex/src/scripts/entry.sh"]

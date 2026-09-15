@@ -27,5 +27,7 @@ if [ -n "${CREATED_USER:-}" ]; then
     fi
 fi
 
-# Hold process alive in background for attachments
-exec sleep infinity
+# Hand off to systemd as PID 1 — sysbox-runc (config.json's "runtime") is
+# what makes this safe without --privileged. Everything above (user/MOTD
+# setup) has to run first since systemd takes over env/PID 1 from here.
+exec /sbin/init
