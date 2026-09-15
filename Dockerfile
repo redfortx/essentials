@@ -15,7 +15,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 # no --privileged, no manual cgroup/mount workarounds needed.
 RUN apt-get update && apt-get install -y --no-install-recommends \
     curl wget git python3 python3-pip nmap netcat-openbsd socat jq \
-    nano vim openssh-client dnsutils whois tcpdump unzip \
+    nano vim openssh-client dnsutils whois tcpdump unzip sudo \
     systemd systemd-sysv \
     && rm -rf /var/lib/apt/lists/* \
     # Masked: these mount/create real kernel interfaces (debug/config/trace
